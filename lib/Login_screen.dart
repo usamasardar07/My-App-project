@@ -8,7 +8,7 @@ import 'package:aicomunitypakistan/User/Student_screen.dart';
 import 'package:aicomunitypakistan/User/University_screen.dart';
 import 'package:aicomunitypakistan/User/company_screen.dart';
 import 'package:aicomunitypakistan/User/professor_screen.dart';
-import 'package:aicomunitypakistan/splash_screen1.dart'; // Import the SplashScreen
+import 'package:aicomunitypakistan/splash_screen1.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -26,19 +26,24 @@ class _LoginScreenState extends State<LoginScreen> {
   void navigateToUserScreen(String userType) {
     switch (userType) {
       case 'Student':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const StudentScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const StudentScreen()));
         break;
       case 'Professional':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfessionalScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ProfessionalScreen()));
         break;
       case 'Professor':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const ProfessorScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const ProfessorScreen()));
         break;
       case 'Company':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const CompanyScreen()));
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => const CompanyScreen()));
         break;
       case 'University':
-        Navigator.push(context, MaterialPageRoute(builder: (context) => const UniversityScreen()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UniversityScreen()));
         break;
       default:
         _showDialog("Error", "User type not recognized");
@@ -211,7 +216,8 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: const EdgeInsets.only(right: 17),
               child: InkWell(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const ForgotPassword()));
                 },
                 child: const Text('Forgot Your Password'),
               ),

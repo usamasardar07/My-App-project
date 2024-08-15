@@ -11,9 +11,16 @@ class EducationalInformation extends StatefulWidget {
 class _EducationalInformationState extends State<EducationalInformation> {
   static const String id = 'Educational_information';
 
-  // Controllers for start and end year fields
-  final TextEditingController startYearController = TextEditingController();
-  final TextEditingController endYearController = TextEditingController();
+  // Controllers for fields
+  final degreeTitleController = TextEditingController();
+  final startYearController = TextEditingController();
+  final endYearController = TextEditingController();
+  final universityController = TextEditingController();
+  final countryController = TextEditingController();
+  final cityController = TextEditingController();
+
+  // GlobalKey to handle form validation
+  final _formKey = GlobalKey<FormState>();
 
   // Function to show date picker
   Future<void> _selectDate(BuildContext context, TextEditingController controller) async {
@@ -36,111 +43,115 @@ class _EducationalInformationState extends State<EducationalInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
-      body: SingleChildScrollView(  // Added to prevent overflow
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Center(
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  color: Colors.white,
-                  child: const Image(
-                    fit: BoxFit.cover,
-                    height: 100,
-                    width: 100,
-                    image: AssetImage('assets/logo2.png'),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 20),
-              const Text(
-                'Educational Information',
-                style: TextStyle(color: Colors.indigo, fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 20),
-
-              // Degree Title Field
-              _buildTextField('Degree Title*'),
-              const SizedBox(height: 10),
-
-              // Degree Starting Year Field
-              _buildDateField('Degree Starting Year*', startYearController),
-              const SizedBox(height: 10),
-
-              // Degree Ending Year Field
-              _buildDateField('Degree Ending Year*', endYearController),
-              const SizedBox(height: 10),
-
-              // University/College Field
-              _buildTextField('University / College'),
-              const SizedBox(height: 10),
-
-              // Country Field
-              _buildTextField('Country*'),
-              const SizedBox(height: 10),
-
-              // City Field
-              _buildTextField('City*'),
-              const SizedBox(height: 20),
-
-              // Sign Up Button with Pop-Up Message
-              Center(
-                child: InkWell(
-                  onTap: () {
-                    // Display a pop-up message when Sign Up is clicked
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Sign up successful!'),
-                        duration: Duration(seconds: 2),
-                        backgroundColor: Colors.purpleAccent,
-                      ),
-                    );
-                  },
+      appBar: AppBar(),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Center(
                   child: Container(
-                    height: 45,
-                    width: 460,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF6537EC), // Start color (purple)
-                          Color(0xFFDA1A8B), // End color (pink)
-                        ],
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                      ),
-                      borderRadius: BorderRadius.all(Radius.circular(8)),
-                    ),
-                    child: const Center(
-                      child: Text('Sign Up', style: TextStyle(color: Colors.white)),
+                    height: 80,
+                    width: 80,
+                    color: Colors.white,
+                    child: const Image(
+                      fit: BoxFit.cover,
+                      height: 100,
+                      width: 100,
+                      image: AssetImage('assets/logo2.png'),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              const Center(
-                child: Text(
-                  'Powered by AICP (PVT.)LTD',
-                  style: TextStyle(color: Colors.indigo),
+                const SizedBox(height: 20),
+                const Text(
+                  'Educational Information',
+                  style: TextStyle(color: Colors.indigo, fontSize: 18, fontWeight: FontWeight.bold),
                 ),
-              ),
-            ],
+                const SizedBox(height: 20),
+
+                // Degree Title Field
+                _buildTextField('Degree Title*', degreeTitleController, 'Please enter your degree title'),
+                const SizedBox(height: 10),
+
+                // Degree Starting Year Field
+                _buildDateField('Degree Starting Year*', startYearController),
+                const SizedBox(height: 10),
+
+                // Degree Ending Year Field
+                _buildDateField('Degree Ending Year*', endYearController),
+                const SizedBox(height: 10),
+
+                // University/College Field
+                _buildTextField('University / College', universityController),
+                const SizedBox(height: 10),
+
+                // Country Field
+                _buildTextField('Country*', countryController, 'Please enter your country'),
+                const SizedBox(height: 10),
+
+                // City Field
+                _buildTextField('City*', cityController, 'Please enter your city'),
+                const SizedBox(height: 20),
+
+                // Sign Up Button with Pop-Up Message
+                Center(
+                  child: InkWell(
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        // Display a pop-up message when Sign Up is clicked
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Sign up successful!'),
+                            duration: Duration(seconds: 2),
+                            backgroundColor: Colors.purpleAccent,
+                          ),
+                        );
+                      }
+                    },
+                    child: Container(
+                      height: 45,
+                      width: 460,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0xFF6537EC), // Start color (purple)
+                            Color(0xFFDA1A8B), // End color (pink)
+                          ],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                      ),
+                      child: const Center(
+                        child: Text('Sign Up', style: TextStyle(color: Colors.white)),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                const Center(
+                  child: Text(
+                    'Powered by AICP (PVT.)LTD',
+                    style: TextStyle(color: Colors.indigo),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  // Helper function to build TextFormField
-  Widget _buildTextField(String labelText) {
+  // Helper function to build TextFormField with validation
+  Widget _buildTextField(String labelText, TextEditingController controller, [String? validationMessage]) {
     return TextFormField(
+      controller: controller,
       keyboardType: TextInputType.text,
       cursorColor: Colors.cyan,
-      enabled: true,
       decoration: InputDecoration(
         filled: true,
         fillColor: const Color(0xffF2F2F2),
@@ -154,10 +165,16 @@ class _EducationalInformationState extends State<EducationalInformation> {
           borderSide: BorderSide(color: Color(0xffF2F2F2)),
         ),
       ),
+      validator: (value) {
+        if (validationMessage != null && (value == null || value.isEmpty)) {
+          return validationMessage;
+        }
+        return null;
+      },
     );
   }
 
-  // Helper function to build date picker field
+  // Helper function to build date picker field with validation
   Widget _buildDateField(String labelText, TextEditingController controller) {
     return TextFormField(
       controller: controller,
@@ -179,6 +196,12 @@ class _EducationalInformationState extends State<EducationalInformation> {
           onPressed: () => _selectDate(context, controller),  // Show date picker on icon press
         ),
       ),
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Please select a date';
+        }
+        return null;
+      },
     );
   }
 }
